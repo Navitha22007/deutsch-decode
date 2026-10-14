@@ -10,20 +10,11 @@ import {
   Timer, 
   Zap, 
   CheckCircle2, 
-  UserPlus, 
   Medal,
   ArrowRight
 } from 'lucide-react';
+import { addLeaderboardEntry, getLeaderboard } from '../utils/leaderboard';
 import { soundManager } from '../utils/audio';
-
-// Default initial expo hall leaderboard entries
-const INITIAL_LEADERBOARD = [
-  { id: 'lb-1', name: 'Lukas S. (Visitor #12)', score: 650, time: 22, level: 'Level 1', date: 'Expo Day 1' },
-  { id: 'lb-2', name: 'Ananya R. (CSE Dept)', score: 600, time: 28, level: 'Level 2', date: 'Expo Day 1' },
-  { id: 'lb-3', name: 'David K. (Visitor #34)', score: 580, time: 31, level: 'Level 1', date: 'Expo Day 1' },
-  { id: 'lb-4', name: 'Priya M. (Lang Club)', score: 550, time: 38, level: 'Level 4', date: 'Expo Day 1' },
-  { id: 'lb-5', name: 'Marco B. (Visitor #08)', score: 500, time: 44, level: 'Level 3', date: 'Expo Day 1' }
-];
 
 export default function CompletionScreen({ 
   completionData, 
@@ -33,6 +24,8 @@ export default function CompletionScreen({
   onExploreVocab 
 }) {
   const { 
+    playerName = 'Visitor',
+    playerAvatar = '🇩🇪',
     levelName = 'Beginner Challenge', 
     totalQuestions = 5, 
     correctCount = 5, 
@@ -42,28 +35,24 @@ export default function CompletionScreen({
     timeSeconds = 28 
   } = completionData;
 
-  const [playerName, setPlayerName] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
-  const [hasSavedName, setHasSavedName] = useState(false);
   const [userRank, setUserRank] = useState(null);
 
-  // Load leaderboard from localStorage or initialize with defaults
+  // AUTOMATIC REAL-TIME INSERTION INTO LEADERBOARD ON MOUNT!
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('deutsch_decode_expo_leaderboard');
-      if (stored) {
-        setLeaderboard(JSON.parse(stored));
-      } else {
-        setLeaderboard(INITIAL_LEADERBOARD);
-        localStorage.setItem('deutsch_decode_expo_leaderboard', JSON.stringify(INITIAL_LEADERBOARD));
-      }
-    } catch {
-      setLeaderboard(INITIAL_LEADERBOARD);
-    }
-  }, []);
+    // Add entry immediately
+    const res = addLeaderboardEntry({
+      name: playerName,
+      avatar: playerAvatar,
+      score: runTotalScore,
+      time: timeSeconds,
+      level: levelName
+    });
 
-  // Trigger continuous festive confetti on mount
-  useEffect(() => {
+    setLeaderboard(res.updatedLeaderboard);
+    setUserRank(res.rank);
+
+    // Continuous festive confetti
     const end = Date.now() + 2.5 * 1000;
     const colors = ['#111111', '#E63946', '#FFC857'];
 
@@ -88,38 +77,6 @@ export default function CompletionScreen({
       }
     })();
   }, []);
-
-  // Handle saving name to leaderboard
-  const handleSaveToLeaderboard = (e) => {
-    e.preventDefault();
-    if (!playerName.trim() || hasSavedName) return;
-
-    soundManager.playSuccess();
-    const newEntry = {
-      id: `user-${Date.now()}`,
-      name: playerName.trim(),
-      score: runTotalScore,
-      time: timeSeconds,
-      level: levelName,
-      date: 'Just now',
-      isCurrentUser: true
-    };
-
-    const updated = [...leaderboard, newEntry]
-      .sort((a, b) => b.score - a.score || a.time - b.time);
-
-    setLeaderboard(updated);
-    setHasSavedName(true);
-
-    const rankIdx = updated.findIndex(item => item.id === newEntry.id);
-    setUserRank(rankIdx + 1);
-
-    try {
-      localStorage.setItem('deutsch_decode_expo_leaderboard', JSON.stringify(updated.slice(0, 10)));
-    } catch {
-      // ignore
-    }
-  };
 
   const percentage = Math.round((correctCount / totalQuestions) * 100);
 
@@ -149,7 +106,7 @@ export default function CompletionScreen({
             DU HAST ES GESCHAFFT!
           </h1>
           <p className="text-base sm:text-lg font-bold text-deRed mt-0.5">
-            You did it! • {levelName} Completed
+            You did it, {playerName}! • {levelName} Completed
           </p>
 
           {/* Badge */}
@@ -159,6 +116,19 @@ export default function CompletionScreen({
               DEUTSCH DECODE CHAMPION
             </span>
           </div>
+        </div>
+
+        {/* Real-time Rank Live Banner */}
+        <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300 text-center shadow-sm">
+          <div className="flex items-center justify-center gap-2 text-amber-950 font-black text-base sm:text-lg">
+            <span>🎉 Real-Time Rank:</span>
+            <span className="px-3 py-0.5 rounded-lg bg-deBlack text-deGold text-base font-black">
+              #{userRank} on Leaderboard
+            </span>
+          </div>
+          <p className="text-xs text-amber-800 font-semibold mt-1">
+            Your score and fast completion time have been recorded live in the Expo Hall of Fame!
+          </p>
         </div>
 
         {/* Performance & Speed Cards Grid */}
@@ -211,7 +181,7 @@ export default function CompletionScreen({
         </div>
 
         {/* ========================================================
-            EXPO HALL LEADERBOARD SECTION
+            REAL-TIME EXPO HALL LEADERBOARD TABLE
            ======================================================== */}
         <div className="my-8 p-5 bg-gradient-to-b from-gray-50 to-amber-50/30 rounded-2xl border-2 border-gray-200">
           
@@ -219,52 +189,18 @@ export default function CompletionScreen({
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-deGold-dark" />
               <h3 className="text-base font-extrabold text-deBlack font-display">
-                College Expo Hall Leaderboard (Top 5)
+                College Expo Hall Leaderboard (Live)
               </h3>
             </div>
             <span className="text-xs text-gray-500 font-medium">
-              Ranked by Score + Fast Completion
+              Ranked in real-time by Score & Speed
             </span>
           </div>
 
-          {/* Name Input Form for Visitor */}
-          {!hasSavedName ? (
-            <form onSubmit={handleSaveToLeaderboard} className="mb-5 p-3.5 bg-white rounded-xl border border-deGold/50 shadow-sm">
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                🎉 Put your name on our Expo Display Stand Leaderboard:
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Enter your name or team (e.g. Alex, Team Alpha)"
-                  value={playerName}
-                  onChange={(e) => setPlayerName(e.target.value)}
-                  className="flex-1 px-3.5 py-2 text-xs sm:text-sm font-semibold border border-gray-300 rounded-xl focus:border-deRed focus:ring-1 focus:ring-deRed"
-                  maxLength={24}
-                />
-                <button
-                  type="submit"
-                  disabled={!playerName.trim()}
-                  className="px-4 py-2 rounded-xl bg-deRed hover:bg-deRed-dark text-white font-bold text-xs sm:text-sm shadow-sm transition-all disabled:opacity-40 flex items-center gap-1.5"
-                >
-                  <UserPlus className="w-3.5 h-3.5" />
-                  <span>Join Board</span>
-                </button>
-              </div>
-            </form>
-          ) : (
-            <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-xl text-xs font-bold text-green-900 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-green-600" />
-                Score saved! You are currently ranked #{userRank} on the Expo Leaderboard!
-              </span>
-            </div>
-          )}
-
           {/* Leaderboard Table */}
-          <div className="space-y-2">
-            {leaderboard.slice(0, 5).map((entry, idx) => {
-              const isUser = entry.isCurrentUser;
+          <div className="space-y-2 max-h-[340px] overflow-y-auto pr-1">
+            {leaderboard.slice(0, 10).map((entry, idx) => {
+              const isUser = entry.isCurrentSession;
               let medal = null;
               if (idx === 0) medal = '🥇';
               else if (idx === 1) medal = '🥈';
@@ -276,7 +212,7 @@ export default function CompletionScreen({
                   key={entry.id || idx}
                   className={`flex items-center justify-between p-3 rounded-xl transition-all ${
                     isUser 
-                      ? 'bg-amber-100/80 border-2 border-deGold text-deBlack font-bold shadow-sm' 
+                      ? 'bg-amber-200/90 border-2 border-deGold text-deBlack font-bold shadow-md scale-[1.01]' 
                       : 'bg-white border border-gray-200 text-gray-800'
                   }`}
                 >
@@ -284,16 +220,17 @@ export default function CompletionScreen({
                     <span className="w-7 text-center font-display font-black text-sm">
                       {medal}
                     </span>
+                    <span className="text-2xl">{entry.avatar || '👤'}</span>
                     <div>
-                      <div className="text-sm font-bold flex items-center gap-1.5">
+                      <div className="text-sm font-bold flex items-center gap-1.5 text-deBlack">
                         <span>{entry.name}</span>
                         {isUser && (
-                          <span className="px-1.5 py-0.2 rounded text-[10px] font-black uppercase bg-deRed text-white">
-                            You
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-deRed text-white shadow-sm">
+                            YOU (LIVE)
                           </span>
                         )}
                       </div>
-                      <span className="text-[10px] text-gray-400 font-medium">
+                      <span className="text-[10px] text-gray-500 font-medium">
                         {entry.level}
                       </span>
                     </div>

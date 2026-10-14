@@ -18,6 +18,7 @@ export default function Navbar({
   setActiveTab, 
   totalScore, 
   onOpenQr,
+  onOpenLeaderboard,
   soundMuted,
   setSoundMuted 
 }) {
@@ -133,18 +134,34 @@ export default function Navbar({
               <HelpCircle className="w-4 h-4" />
               <span>How to Play</span>
             </button>
+
+            {/* Leaderboard Nav Link */}
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                if (onOpenLeaderboard) onOpenLeaderboard();
+              }}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-deGold hover:bg-white/5 transition-all"
+            >
+              <Trophy className="w-4 h-4 text-deGold" />
+              <span>Leaderboard</span>
+            </button>
           </nav>
 
           {/* Controls: Score Pill, Sound Toggle, QR Button */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Live Score Pill */}
-            <div 
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-deBlack-light border border-deGold/30 text-deGold text-xs sm:text-sm font-bold shadow-sm"
-              title="Current Visitor Score"
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                if (onOpenLeaderboard) onOpenLeaderboard();
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-deBlack-light border border-deGold/30 text-deGold text-xs sm:text-sm font-bold shadow-sm hover:border-deGold transition-colors"
+              title="Click to view Live Expo Leaderboard"
             >
               <Trophy className="w-4 h-4 text-deGold animate-pulse" />
               <span>{totalScore} <span className="text-[10px] text-gray-400 font-normal">pts</span></span>
-            </div>
+            </button>
 
             {/* Sound Mute Toggle */}
             <button
@@ -228,6 +245,16 @@ export default function Navbar({
           >
             <HelpCircle className="w-4 h-4" />
             How to Play
+          </button>
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              if (onOpenLeaderboard) onOpenLeaderboard();
+            }}
+            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-deGold bg-white/5"
+          >
+            <Trophy className="w-4 h-4 text-deGold" />
+            Live Expo Leaderboard
           </button>
           <button
             onClick={() => {

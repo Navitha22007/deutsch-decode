@@ -5,6 +5,7 @@ import VocabularyExplorer from './components/VocabularyExplorer';
 import GameHub from './components/GameHub';
 import HowToPlay from './components/HowToPlay';
 import ExpoQrModal from './components/ExpoQrModal';
+import LeaderboardModal from './components/LeaderboardModal';
 import Footer from './components/Footer';
 import { 
   Puzzle, 
@@ -25,6 +26,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'vocabulary' | 'game' | 'how-to-play'
   const [totalScore, setTotalScore] = useState(0);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
 
   // Restore saved score and sound preferences from localStorage if available
@@ -67,6 +69,7 @@ export default function App() {
         setActiveTab={setActiveTab}
         totalScore={totalScore}
         onOpenQr={() => setIsQrModalOpen(true)}
+        onOpenLeaderboard={() => setIsLeaderboardOpen(true)}
         soundMuted={soundMuted}
         setSoundMuted={setSoundMuted}
       />
@@ -386,6 +389,12 @@ export default function App() {
       <ExpoQrModal
         isOpen={isQrModalOpen}
         onClose={() => setIsQrModalOpen(false)}
+      />
+
+      {/* Real-time Expo Leaderboard Modal */}
+      <LeaderboardModal
+        isOpen={isLeaderboardOpen}
+        onClose={() => setIsLeaderboardOpen(false)}
       />
 
     </div>

@@ -18,6 +18,7 @@ import { soundManager } from '../utils/audio';
 
 export default function BeginnerGameView({ 
   levelData, 
+  playerInfo,
   onNavigateHome, 
   onGameComplete 
 }) {
@@ -153,6 +154,8 @@ export default function BeginnerGameView({
       const finalTotalScore = score + (status === 'correct' ? 0 : 0) + speedBonus;
 
       onGameComplete({
+        playerName: playerInfo?.playerName || 'Visitor',
+        playerAvatar: playerInfo?.playerAvatar || '🇩🇪',
         levelName: levelData.title,
         levelNum: levelData.levelNum,
         totalQuestions: questions.length,
@@ -200,12 +203,18 @@ export default function BeginnerGameView({
           </div>
         </div>
 
-        {/* Center: Small Progress Indicator (Question 2 of 5) */}
+        {/* Center: Small Progress Indicator & Player Tag */}
         <div className="text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-bold text-gray-700 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-deRed animate-pulse"></span>
             <span>Question {currentIndex + 1} of {questions.length}</span>
           </div>
+          {playerInfo?.playerName && (
+            <div className="text-[10px] text-gray-500 font-semibold mt-0.5 flex items-center justify-center gap-1">
+              <span>{playerInfo.playerAvatar}</span>
+              <span className="font-bold text-deBlack truncate max-w-[100px]">{playerInfo.playerName}</span>
+            </div>
+          )}
         </div>
 
         {/* Right: Score Display + Home Button */}
