@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   Trophy, 
@@ -10,7 +10,7 @@ import {
   Timer
 } from 'lucide-react';
 import { GAME_LEVELS } from '../data/challenges';
-import { getLeaderboard } from '../utils/leaderboard';
+import { getLeaderboard, fetchLeaderboard } from '../utils/leaderboard';
 import { soundManager } from '../utils/audio';
 
 const AVATARS = [
@@ -36,10 +36,20 @@ export default function PlayerRegistration({
   });
   const [selectedAvatar, setSelectedAvatar] = useState('🇩🇪');
   const [selectedLevelId, setSelectedLevelId] = useState(defaultLevel);
+  const [topPlayer, setTopPlayer] = useState(() => {
+    const cached = getLeaderboard();
+    return cached[0] || null;
+  });
 
-  // Get current #1 top score from leaderboard
-  const leaderboard = getLeaderboard();
-  const topPlayer = leaderboard[0] || null;
+  // Fetch current live #1 player from centralized database
+  useEffect(() => {
+    fetchLeaderboard().then(list => {
+      if (list && Array.isArray(list)) {
+        setTopPlayer(list[0] || null);
+      }
+    });
+  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

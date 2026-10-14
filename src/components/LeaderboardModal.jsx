@@ -10,7 +10,7 @@ import {
   Download,
   Users
 } from 'lucide-react';
-import { getLeaderboard, clearLeaderboard, exportLeaderboardCSV } from '../utils/leaderboard';
+import { getLeaderboard, fetchLeaderboard, clearLeaderboard, exportLeaderboardCSV } from '../utils/leaderboard';
 import { soundManager } from '../utils/audio';
 
 export default function LeaderboardModal({ isOpen, onClose }) {
@@ -18,17 +18,33 @@ export default function LeaderboardModal({ isOpen, onClose }) {
   const [showConfirmReset, setShowConfirmReset] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      setLeaderboard(getLeaderboard());
-      setShowConfirmReset(false);
-    }
+    if (!isOpen) return;
+
+    // 1. Instant display from cache
+    setLeaderboard(getLeaderboard());
+    setShowConfirmReset(false);
+
+    // 2. Fetch fresh data from centralized server
+    fetchLeaderboard().then(data => {
+      if (data && Array.isArray(data)) setLeaderboard(data);
+    });
+
+    // 3. Live auto-polling every 3s while modal is displayed on laptop booth screen
+    const interval = setInterval(async () => {
+      const fresh = await fetchLeaderboard();
+      if (fresh && Array.isArray(fresh)) {
+        setLeaderboard(fresh);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleReset = () => {
+  const handleReset = async () => {
     soundManager.playClick();
-    clearLeaderboard();
+    await clearLeaderboard();
     setLeaderboard([]);
     setShowConfirmReset(false);
   };

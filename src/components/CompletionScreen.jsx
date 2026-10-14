@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { 
   Trophy, 
@@ -13,7 +13,7 @@ import {
   Download,
   Users
 } from 'lucide-react';
-import { addLeaderboardEntry, exportLeaderboardCSV } from '../utils/leaderboard';
+import { addLeaderboardEntry, fetchLeaderboard, exportLeaderboardCSV } from '../utils/leaderboard';
 import { soundManager } from '../utils/audio';
 
 export default function CompletionScreen({ 
@@ -37,19 +37,40 @@ export default function CompletionScreen({
 
   const [leaderboard, setLeaderboard] = useState([]);
   const [metaInfo, setMetaInfo] = useState(null);
+  const hasSavedRef = useRef(false);
 
-  // AUTOMATIC REAL-TIME INSERTION INTO LEADERBOARD ON MOUNT!
+  // AUTOMATIC REAL-TIME INSERTION INTO CENTRAL DATABASE ON MOUNT
   useEffect(() => {
-    const res = addLeaderboardEntry({
-      name: playerName,
-      avatar: playerAvatar,
-      score: runTotalScore,
-      time: timeSeconds,
-      level: levelName
-    });
+    if (hasSavedRef.current) return;
+    hasSavedRef.current = true;
 
-    setLeaderboard(res.updatedLeaderboard);
-    setMetaInfo(res);
+    async function recordScore() {
+      const res = await addLeaderboardEntry({
+        name: playerName,
+        avatar: playerAvatar,
+        score: runTotalScore,
+        time: timeSeconds,
+        level: levelName
+      });
+
+      setLeaderboard(res.updatedLeaderboard || []);
+      setMetaInfo(res);
+    }
+
+    recordScore();
+
+    // Live background polling every 3.5s so laptop & other phones see real-time updates
+    const pollInterval = setInterval(async () => {
+      const fresh = await fetchLeaderboard();
+      if (fresh && Array.isArray(fresh)) {
+        // preserve isCurrentSession tag for current player
+        const withHighlight = fresh.map(p => ({
+          ...p,
+          isCurrentSession: p.name.trim().toLowerCase() === playerName.trim().toLowerCase()
+        }));
+        setLeaderboard(withHighlight);
+      }
+    }, 3500);
 
     // Continuous festive confetti
     const end = Date.now() + 2.5 * 1000;
@@ -75,7 +96,10 @@ export default function CompletionScreen({
         requestAnimationFrame(frame);
       }
     })();
-  }, []);
+
+    return () => clearInterval(pollInterval);
+  }, [playerName, playerAvatar, runTotalScore, timeSeconds, levelName]);
+
 
   const percentage = Math.round((correctCount / totalQuestions) * 100);
 
@@ -132,8 +156,12 @@ export default function CompletionScreen({
                 <span>🌟 <strong>First Participant of the Day!</strong> You are currently holding the #1 position on the expo leaderboard!</span>
               ) : metaInfo.isNewFirstPlace ? (
                 <span>🏆 <strong>NEW BOOTH RECORD!</strong> You just took 1st Place from {metaInfo.previousLeader?.name || 'the previous leader'} ({metaInfo.previousLeader?.score} pts)!</span>
+              ) : metaInfo.isPersonalBest ? (
+                <span>🔥 <strong>NEW PERSONAL BEST!</strong> You improved your score/time! Ranked #{metaInfo.rank} of {metaInfo.totalParticipants}.</span>
+              ) : !metaInfo.isNewParticipant ? (
+                <span>✨ You already hold an official top score on the board! Your personal best is safely preserved at Rank #{metaInfo.rank}.</span>
               ) : (
-                <span>👏 Great run! You are ranked #{metaInfo.rank}. {metaInfo.previousLeader?.name} is currently leading with {metaInfo.previousLeader?.score} pts.</span>
+                <span>👏 Great run! You are ranked #{metaInfo.rank} of {metaInfo.totalParticipants}. {metaInfo.previousLeader?.name} is currently leading with {metaInfo.previousLeader?.score} pts.</span>
               )}
             </p>
           </div>
