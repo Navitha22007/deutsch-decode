@@ -91,3 +91,17 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   outline: 2px solid #E63946;
   outline-offset: 2px;
 }
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+

@@ -1,16 +1,346 @@
-// Mode B: Sentence Decoder Challenges
+// LEVEL 1: LOOK AND LEARN (5 Beginner Questions)
+export const LEVEL_1_QUESTIONS = [
+  {
+    id: 'l1-1',
+    level: 1,
+    levelName: 'Level 1: Look & Learn',
+    illustration: 'apfel',
+    englishName: 'APPLE',
+    germanDisplay: 'DER APFEL',
+    germanSpoken: 'Der Apfel',
+    gender: 'Masculine (der)',
+    pronunciation: 'dare AH-pfel',
+    prompt: 'What is APPLE in German?',
+    options: ['Der Apfel', 'Das Wasser', 'Das Buch'],
+    correctAnswer: 'Der Apfel',
+    hint: "Apples are masculine in German, so they use the article 'der'. Notice it sounds close to 'apple'!",
+    explanation: "'Der Apfel' is masculine. In German, every noun has a gender: der (masculine), die (feminine), or das (neuter)."
+  },
+  {
+    id: 'l1-2',
+    level: 1,
+    levelName: 'Level 1: Look & Learn',
+    illustration: 'wasser',
+    englishName: 'WATER',
+    germanDisplay: 'DAS WASSER',
+    germanSpoken: 'Das Wasser',
+    gender: 'Neuter (das)',
+    pronunciation: 'dahs VAH-ser',
+    prompt: 'What is WATER in German?',
+    options: ['Die Banane', 'Das Wasser', 'Der Apfel'],
+    correctAnswer: 'Das Wasser',
+    hint: "Water is neuter ('das'). 'Wasser' looks almost identical to the English 'water'!",
+    explanation: "'Das Wasser' is neuter. German has no continuous tense, so 'Ich trinke Wasser' means both 'I drink' and 'I am drinking water'."
+  },
+  {
+    id: 'l1-3',
+    level: 1,
+    levelName: 'Level 1: Look & Learn',
+    illustration: 'brot',
+    englishName: 'BREAD',
+    germanDisplay: 'DAS BROT',
+    germanSpoken: 'Das Brot',
+    gender: 'Neuter (das)',
+    pronunciation: 'dahs BROHT',
+    prompt: 'What is BREAD in German?',
+    options: ['Das Brot', 'Der Kaffee', 'Die Milch'],
+    correctAnswer: 'Das Brot',
+    hint: "Bread is famous in Germany! 'Brot' is neuter ('das Brot').",
+    explanation: "'Das Brot' is neuter. Germany is famous for having over 3,000 distinct registered bread varieties!"
+  },
+  {
+    id: 'l1-4',
+    level: 1,
+    levelName: 'Level 1: Look & Learn',
+    illustration: 'buch',
+    englishName: 'BOOK',
+    germanDisplay: 'DAS BUCH',
+    germanSpoken: 'Das Buch',
+    gender: 'Neuter (das)',
+    pronunciation: 'dahs BOOKH',
+    prompt: 'What is BOOK in German?',
+    options: ['Das Wasser', 'Das Buch', 'Der Apfel'],
+    correctAnswer: 'Das Buch',
+    hint: "A book is 'das Buch'. Notice the 'ch' makes a soft breathing sound from the back of the throat.",
+    explanation: "'Das Buch' is neuter. Remember that all German nouns are capitalized without exception!"
+  },
+  {
+    id: 'l1-5',
+    level: 1,
+    levelName: 'Level 1: Look & Learn',
+    illustration: 'milch',
+    englishName: 'MILK',
+    germanDisplay: 'DIE MILCH',
+    germanSpoken: 'Die Milch',
+    gender: 'Feminine (die)',
+    pronunciation: 'dee MILKH',
+    prompt: 'What is MILK in German?',
+    options: ['Das Brot', 'Der Apfel', 'Die Milch'],
+    correctAnswer: 'Die Milch',
+    hint: "Milk is feminine in German, taking the article 'die'.",
+    explanation: "'Die Milch' is feminine. Most liquids like tea and coffee are masculine, but milk takes 'die'!"
+  }
+];
+
+// LEVEL 2: PICTURE MATCH (5 Questions — Focus is the 3D Image)
+export const LEVEL_2_QUESTIONS = [
+  {
+    id: 'l2-1',
+    level: 2,
+    levelName: 'Level 2: Picture Match',
+    illustration: 'banane',
+    prompt: 'Choose the German word for this picture:',
+    options: ['Die Banane', 'Der Apfel', 'Das Brot'],
+    correctAnswer: 'Die Banane',
+    hint: "This yellow fruit is feminine: 'Die Banane'.",
+    explanation: "'Die Banane' means banana. In German, most fruits ending in -e are feminine!"
+  },
+  {
+    id: 'l2-2',
+    level: 2,
+    levelName: 'Level 2: Picture Match',
+    illustration: 'apfel',
+    prompt: 'Choose the German word for this picture:',
+    options: ['Das Wasser', 'Der Apfel', 'Das Buch'],
+    correctAnswer: 'Der Apfel',
+    hint: "Red, crunchy, and masculine ('der').",
+    explanation: "'Der Apfel' is an apple. The plural is 'die Äpfel' with an umlaut."
+  },
+  {
+    id: 'l2-3',
+    level: 2,
+    levelName: 'Level 2: Picture Match',
+    illustration: 'kaffee',
+    prompt: 'Choose the German word for this picture:',
+    options: ['Der Kaffee', 'Die Milch', 'Das Wasser'],
+    correctAnswer: 'Der Kaffee',
+    hint: "A hot morning beverage, masculine: 'Der Kaffee'.",
+    explanation: "'Der Kaffee' means coffee. Notice the double 'f' and double 'e'!"
+  },
+  {
+    id: 'l2-4',
+    level: 2,
+    levelName: 'Level 2: Picture Match',
+    illustration: 'brot',
+    prompt: 'Choose the German word for this picture:',
+    options: ['Die Banane', 'Das Brot', 'Der Apfel'],
+    correctAnswer: 'Das Brot',
+    hint: "Golden baked loaf: 'Das Brot'.",
+    explanation: "'Das Brot' means bread. A sandwich or snack is often called 'ein belegtes Brot'."
+  },
+  {
+    id: 'l2-5',
+    level: 2,
+    levelName: 'Level 2: Picture Match',
+    illustration: 'buch',
+    prompt: 'Choose the German word for this picture:',
+    options: ['Das Buch', 'Der Kaffee', 'Das Wasser'],
+    correctAnswer: 'Das Buch',
+    hint: "Full of pages and knowledge: 'Das Buch'.",
+    explanation: "'Das Buch' means book. In school, you might say 'Ich lese ein Buch' (I read a book)."
+  }
+];
+
+// LEVEL 3: COMPLETE THE WORD / FILL IN THE BLANK (5 Questions)
+export const LEVEL_3_QUESTIONS = [
+  {
+    id: 'l3-1',
+    level: 3,
+    levelName: 'Level 3: Complete the Word',
+    illustration: 'apfel',
+    prompt: 'Complete the German phrase for the picture:',
+    prefix: 'Der',
+    suffix: '',
+    blankText: 'Der _______',
+    options: ['Apfel', 'Wasser', 'Buch'],
+    correctAnswer: 'Apfel',
+    fullPhrase: 'Der Apfel',
+    hint: "Which word goes with the masculine article 'Der'?",
+    explanation: "'Der Apfel' — 'Apfel' is masculine, so it takes 'Der'. 'Wasser' and 'Buch' take 'Das'."
+  },
+  {
+    id: 'l3-2',
+    level: 3,
+    levelName: 'Level 3: Complete the Word',
+    illustration: 'brot',
+    prompt: 'Complete the German phrase for the picture:',
+    prefix: 'Das',
+    suffix: '',
+    blankText: 'Das _______',
+    options: ['Brot', 'Banane', 'Kaffee'],
+    correctAnswer: 'Brot',
+    fullPhrase: 'Das Brot',
+    hint: "Banane is 'Die', Kaffee is 'Der'. Which one is 'Das'?",
+    explanation: "'Das Brot' — 'Brot' is neuter and takes 'Das'. Banane is 'Die' and Kaffee is 'Der'."
+  },
+  {
+    id: 'l3-3',
+    level: 3,
+    levelName: 'Level 3: Complete the Word',
+    illustration: 'banane',
+    prompt: 'Complete the German phrase for the picture:',
+    prefix: 'Die',
+    suffix: '',
+    blankText: 'Die _______',
+    options: ['Banane', 'Apfel', 'Wasser'],
+    correctAnswer: 'Banane',
+    fullPhrase: 'Die Banane',
+    hint: "Which word is feminine ('Die')?",
+    explanation: "'Die Banane' — 'Banane' is feminine, taking 'Die'. Apfel takes 'Der' and Wasser takes 'Das'."
+  },
+  {
+    id: 'l3-4',
+    level: 3,
+    levelName: 'Level 3: Complete the Word',
+    illustration: 'wasser',
+    prompt: 'Complete the German phrase for the picture:',
+    prefix: 'Das',
+    suffix: '',
+    blankText: 'Das _______',
+    options: ['Wasser', 'Apfel', 'Milch'],
+    correctAnswer: 'Wasser',
+    fullPhrase: 'Das Wasser',
+    hint: "Clear and refreshing: 'Das Wasser'.",
+    explanation: "'Das Wasser' — Water is neuter ('Das'). Milch is 'Die' and Apfel is 'Der'."
+  },
+  {
+    id: 'l3-5',
+    level: 3,
+    levelName: 'Level 3: Complete the Word',
+    illustration: 'buch',
+    prompt: 'Complete the German phrase for the picture:',
+    prefix: 'Das',
+    suffix: '',
+    blankText: 'Das _______',
+    options: ['Buch', 'Milch', 'Banane'],
+    correctAnswer: 'Buch',
+    fullPhrase: 'Das Buch',
+    hint: "Milch and Banane are 'Die'. Which one takes 'Das'?",
+    explanation: "'Das Buch' — 'Buch' is neuter and takes 'Das'."
+  }
+];
+
+// LEVEL 4: BUILD A SIMPLE SENTENCE (5 Beginner Sentences, exactly as requested)
+export const LEVEL_4_QUESTIONS = [
+  {
+    id: 'l4-1',
+    level: 4,
+    levelName: 'Level 4: Build a Sentence',
+    illustration: 'wasser',
+    englishMeaning: 'I drink water.',
+    prompt: 'Translate: "I drink water."',
+    correctSentence: 'Ich trinke Wasser.',
+    correctTokens: ['Ich', 'trinke', 'Wasser.'],
+    bankTokens: ['Ich', 'trinke', 'Wasser.', 'ein'],
+    hint: "Start with 'Ich' (I), then verb 'trinke' (drink), then 'Wasser.' (water).",
+    explanation: "In German statements, the verb always comes in position 2 ('Verb-Second' rule). Also, 'Wasser' is capitalized!"
+  },
+  {
+    id: 'l4-2',
+    level: 4,
+    levelName: 'Level 4: Build a Sentence',
+    illustration: 'apfel',
+    englishMeaning: 'I eat an apple.',
+    prompt: 'Translate: "I eat an apple."',
+    correctSentence: 'Ich esse einen Apfel.',
+    correctTokens: ['Ich', 'esse', 'einen', 'Apfel.'],
+    bankTokens: ['Ich', 'esse', 'einen', 'Apfel.', 'Buch'],
+    hint: "Start with 'Ich', followed by verb 'esse', then article 'einen', and noun 'Apfel.'",
+    explanation: "Because 'der Apfel' is the direct object (accusative masculine), 'ein' becomes 'einen'!"
+  },
+  {
+    id: 'l4-3',
+    level: 4,
+    levelName: 'Level 4: Build a Sentence',
+    illustration: 'buch',
+    englishMeaning: 'I read a book.',
+    prompt: 'Translate: "I read a book."',
+    correctSentence: 'Ich lese ein Buch.',
+    correctTokens: ['Ich', 'lese', 'ein', 'Buch.'],
+    bankTokens: ['Ich', 'lese', 'ein', 'Buch.', 'trinke'],
+    hint: "Subject 'Ich', verb 'lese', article 'ein', noun 'Buch.'",
+    explanation: "'das Buch' is neuter. In the accusative case, the indefinite article for neuter remains 'ein'."
+  },
+  {
+    id: 'l4-4',
+    level: 4,
+    levelName: 'Level 4: Build a Sentence',
+    illustration: 'deutsch',
+    englishMeaning: 'I learn German.',
+    prompt: 'Translate: "I learn German."',
+    correctSentence: 'Ich lerne Deutsch.',
+    correctTokens: ['Ich', 'lerne', 'Deutsch.'],
+    bankTokens: ['Ich', 'lerne', 'Deutsch.', 'Kaffee'],
+    hint: "Subject 'Ich', verb 'lerne' (am learning), then language 'Deutsch.'",
+    explanation: "'Deutsch' is capitalized. German does not need an extra '-ing' word — 'Ich lerne' covers both!"
+  },
+  {
+    id: 'l4-5',
+    level: 4,
+    levelName: 'Level 4: Build a Sentence',
+    illustration: 'glücklich',
+    englishMeaning: 'I am happy.',
+    prompt: 'Translate: "I am happy."',
+    correctSentence: 'Ich bin glücklich.',
+    correctTokens: ['Ich', 'bin', 'glücklich.'],
+    bankTokens: ['Ich', 'bin', 'glücklich.', 'Brot'],
+    hint: "'Ich' (I) + 'bin' (am) + 'glücklich.' (happy).",
+    explanation: "Adjectives coming after the verb 'sein' (like 'bin') take no extra ending in German — simply 'glücklich'!"
+  }
+];
+
+// ALL 4 LEVELS METADATA
+export const GAME_LEVELS = [
+  {
+    id: 'level1',
+    levelNum: 1,
+    title: 'Look & Learn',
+    deTitle: 'Schau & Lerne',
+    description: 'Learn the word with picture & audio first, then answer.',
+    icon: 'Eye',
+    badge: 'Absolute Beginner',
+    questions: LEVEL_1_QUESTIONS
+  },
+  {
+    id: 'level2',
+    levelNum: 2,
+    title: 'Picture Match',
+    deTitle: 'Bilderrätsel',
+    description: 'Choose the correct German word for the 3D illustration.',
+    icon: 'Image',
+    badge: 'Visual Quiz',
+    questions: LEVEL_2_QUESTIONS
+  },
+  {
+    id: 'level3',
+    levelNum: 3,
+    title: 'Complete the Word',
+    deTitle: 'Wort vervollständigen',
+    description: 'Fill in the missing German word for the given article.',
+    icon: 'Edit3',
+    badge: 'Fill in the Blank',
+    questions: LEVEL_3_QUESTIONS
+  },
+  {
+    id: 'level4',
+    levelNum: 4,
+    title: 'Build a Simple Sentence',
+    deTitle: 'Satzbau',
+    description: 'Tap cards to assemble simple 3-4 word German sentences.',
+    icon: 'Puzzle',
+    badge: 'Sentence Builder',
+    questions: LEVEL_4_QUESTIONS
+  }
+];
+
+// Original 15 Sentences preserved for advanced mode
 export const SENTENCE_CHALLENGES = [
   {
     id: 1,
     english: "I am learning German.",
     germanTokens: ["Ich", "lerne", "Deutsch."],
     distractors: ["trinke", "ein", "Buch"],
-    grammarTip: "Verb Position: In German statements, the conjugated verb ('lerne') always occupies the second position. Notice 'Deutsch' is capitalized because all German nouns and languages are capitalized!",
-    breakdown: [
-      { de: "Ich", en: "I (subject)" },
-      { de: "lerne", en: "am learning (verb, 1st person singular)" },
-      { de: "Deutsch.", en: "German (proper noun / object)" }
-    ],
+    grammarTip: "Verb Position: In German statements, the conjugated verb ('lerne') always occupies the second position. Notice 'Deutsch' is capitalized!",
     difficulty: "Beginner"
   },
   {
@@ -18,13 +348,7 @@ export const SENTENCE_CHALLENGES = [
     english: "I am reading a book.",
     germanTokens: ["Ich", "lese", "ein", "Buch."],
     distractors: ["Wasser", "schreibt", "wir"],
-    grammarTip: "'das Buch' is neuter. In the accusative case (direct object), the indefinite article 'ein' remains unchanged for neuter nouns.",
-    breakdown: [
-      { de: "Ich", en: "I" },
-      { de: "lese", en: "read / am reading" },
-      { de: "ein", en: "a (neuter accusative)" },
-      { de: "Buch.", en: "book" }
-    ],
+    grammarTip: "'das Buch' is neuter. In the accusative case (direct object), the indefinite article 'ein' remains unchanged.",
     difficulty: "Beginner"
   },
   {
@@ -32,12 +356,7 @@ export const SENTENCE_CHALLENGES = [
     english: "I am drinking water.",
     germanTokens: ["Ich", "trinke", "Wasser."],
     distractors: ["essen", "Kaffee", "sie"],
-    grammarTip: "No continuous tense: German does not use '-ing' verb forms. 'Ich trinke' means both 'I drink' and 'I am drinking'.",
-    breakdown: [
-      { de: "Ich", en: "I" },
-      { de: "trinke", en: "drink / am drinking" },
-      { de: "Wasser.", en: "water" }
-    ],
+    grammarTip: "No continuous tense: German does not use '-ing'. 'Ich trinke' means both 'I drink' and 'I am drinking'.",
     difficulty: "Beginner"
   },
   {
@@ -46,12 +365,6 @@ export const SENTENCE_CHALLENGES = [
     germanTokens: ["Ich", "esse", "einen", "Apfel."],
     distractors: ["Brot", "trinkt", "ein"],
     grammarTip: "Accusative Masculine: 'der Apfel' is masculine. When it becomes the direct object, 'ein' turns into 'einen'.",
-    breakdown: [
-      { de: "Ich", en: "I" },
-      { de: "esse", en: "eat / am eating" },
-      { de: "einen", en: "an (masculine accusative)" },
-      { de: "Apfel.", en: "apple" }
-    ],
     difficulty: "Beginner"
   },
   {
@@ -59,13 +372,7 @@ export const SENTENCE_CHALLENGES = [
     english: "You are my friend.",
     germanTokens: ["Du", "bist", "mein", "Freund."],
     distractors: ["er", "ist", "meine"],
-    grammarTip: "'sein' (to be): 'Du bist' is the informal 2nd-person singular form. 'Freund' is masculine, so we use possessive 'mein'.",
-    breakdown: [
-      { de: "Du", en: "You (informal)" },
-      { de: "bist", en: "are" },
-      { de: "mein", en: "my (masculine)" },
-      { de: "Freund.", en: "male friend" }
-    ],
+    grammarTip: "'sein' (to be): 'Du bist' is the informal 2nd-person singular form.",
     difficulty: "Beginner"
   },
   {
@@ -73,12 +380,7 @@ export const SENTENCE_CHALLENGES = [
     english: "I am happy.",
     germanTokens: ["Ich", "bin", "glücklich."],
     distractors: ["müde", "bist", "traurig"],
-    grammarTip: "Adjectives after the verb 'sein' (predicate adjectives) take no extra grammatical endings in German: simply 'glücklich'!",
-    breakdown: [
-      { de: "Ich", en: "I" },
-      { de: "bin", en: "am" },
-      { de: "glücklich.", en: "happy" }
-    ],
+    grammarTip: "Predicate adjectives take no extra grammatical endings in German: simply 'glücklich'!",
     difficulty: "Beginner"
   },
   {
@@ -86,13 +388,7 @@ export const SENTENCE_CHALLENGES = [
     english: "We are going to school.",
     germanTokens: ["Wir", "gehen", "zur", "Schule."],
     distractors: ["Haus", "kommt", "im"],
-    grammarTip: "'zur' is a contraction of the preposition 'zu' + feminine dative article 'der' ('zu + der = zur Schule').",
-    breakdown: [
-      { de: "Wir", en: "We" },
-      { de: "gehen", en: "go / are going" },
-      { de: "zur", en: "to the (zu + der)" },
-      { de: "Schule.", en: "school" }
-    ],
+    grammarTip: "'zur' is a contraction of 'zu' + feminine dative article 'der' ('zu + der = zur Schule').",
     difficulty: "Intermediate"
   },
   {
@@ -100,12 +396,7 @@ export const SENTENCE_CHALLENGES = [
     english: "She plays football.",
     germanTokens: ["Sie", "spielt", "Fußball."],
     distractors: ["Er", "spielen", "Musik"],
-    grammarTip: "Third person singular adds '-t': 'Sie spielt'. The letter 'ß' (Eszett / sharp S) represents a double 's' after a long vowel.",
-    breakdown: [
-      { de: "Sie", en: "She" },
-      { de: "spielt", en: "plays" },
-      { de: "Fußball.", en: "football (soccer)" }
-    ],
+    grammarTip: "Third person singular adds '-t': 'Sie spielt'. The 'ß' represents sharp double S.",
     difficulty: "Beginner"
   },
   {
@@ -114,11 +405,6 @@ export const SENTENCE_CHALLENGES = [
     germanTokens: ["Er", "trinkt", "Milch."],
     distractors: ["trinke", "Tee", "Sie"],
     grammarTip: "Pronoun agreement: 'Er' (he) conjugates the verb with ending '-t' -> 'trinkt'.",
-    breakdown: [
-      { de: "Er", en: "He" },
-      { de: "trinkt", en: "drinks" },
-      { de: "Milch.", en: "milk" }
-    ],
     difficulty: "Beginner"
   },
   {
@@ -126,13 +412,7 @@ export const SENTENCE_CHALLENGES = [
     english: "I am writing a letter.",
     germanTokens: ["Ich", "schreibe", "einen", "Brief."],
     distractors: ["Buch", "liest", "ein"],
-    grammarTip: "'der Brief' is masculine. As the direct object in accusative case, 'ein' changes to 'einen'.",
-    breakdown: [
-      { de: "Ich", en: "I" },
-      { de: "schreibe", en: "am writing" },
-      { de: "einen", en: "a (masculine accusative)" },
-      { de: "Brief.", en: "letter" }
-    ],
+    grammarTip: "'der Brief' is masculine. In accusative case, 'ein' changes to 'einen'.",
     difficulty: "Intermediate"
   },
   {
@@ -140,13 +420,7 @@ export const SENTENCE_CHALLENGES = [
     english: "That is my family.",
     germanTokens: ["Das", "ist", "meine", "Familie."],
     distractors: ["mein", "sind", "Freund"],
-    grammarTip: "Feminine possessive: 'die Familie' is feminine, so the possessive pronoun receives an '-e' ending -> 'meine Familie'.",
-    breakdown: [
-      { de: "Das", en: "That" },
-      { de: "ist", en: "is" },
-      { de: "meine", en: "my (feminine)" },
-      { de: "Familie.", en: "family" }
-    ],
+    grammarTip: "'die Familie' is feminine, so possessive pronoun gets '-e': 'meine Familie'.",
     difficulty: "Beginner"
   },
   {
@@ -154,11 +428,7 @@ export const SENTENCE_CHALLENGES = [
     english: "Good morning!",
     germanTokens: ["Guten", "Morgen!"],
     distractors: ["Tag", "Abend", "Gute"],
-    grammarTip: "Accusative greeting: It implies '[Ich wünsche dir einen] guten Morgen' (I wish you a good morning), hence the '-en' ending on 'Guten'.",
-    breakdown: [
-      { de: "Guten", en: "Good (accusative masc.)" },
-      { de: "Morgen!", en: "Morning!" }
-    ],
+    grammarTip: "Accusative greeting: It implies '[Ich wünsche dir einen] guten Morgen'.",
     difficulty: "Beginner"
   },
   {
@@ -166,14 +436,7 @@ export const SENTENCE_CHALLENGES = [
     english: "I speak a little German.",
     germanTokens: ["Ich", "spreche", "ein", "bisschen", "Deutsch."],
     distractors: ["viel", "Englisch", "lernst"],
-    grammarTip: "'ein bisschen' is an extremely useful German idiomatic phrase meaning 'a little bit / slightly'.",
-    breakdown: [
-      { de: "Ich", en: "I" },
-      { de: "spreche", en: "speak" },
-      { de: "ein", en: "a" },
-      { de: "bisschen", en: "little" },
-      { de: "Deutsch.", en: "German" }
-    ],
+    grammarTip: "'ein bisschen' is an idiomatic phrase meaning 'a little bit'.",
     difficulty: "Intermediate"
   },
   {
@@ -181,13 +444,7 @@ export const SENTENCE_CHALLENGES = [
     english: "Today I am tired.",
     germanTokens: ["Heute", "bin", "ich", "müde."],
     distractors: ["ist", "glücklich", "morgen"],
-    grammarTip: "V2 Rule with Inversion: When a sentence starts with an element other than the subject (here the adverb 'Heute'), the conjugated verb ('bin') stays in 2nd place, and the subject ('ich') flips to 3rd place!",
-    breakdown: [
-      { de: "Heute", en: "Today (adverb in pos. 1)" },
-      { de: "bin", en: "am (verb in pos. 2!)" },
-      { de: "ich", en: "I (subject in pos. 3)" },
-      { de: "müde.", en: "tired" }
-    ],
+    grammarTip: "V2 Inversion: When sentence starts with an adverb ('Heute'), verb 'bin' stays in 2nd position!",
     difficulty: "Intermediate"
   },
   {
@@ -195,18 +452,12 @@ export const SENTENCE_CHALLENGES = [
     english: "Where is the book?",
     germanTokens: ["Wo", "ist", "das", "Buch?"],
     distractors: ["Wer", "sind", "der"],
-    grammarTip: "W-Questions: Question words like 'Wo' (Where), 'Wer' (Who), 'Was' (What), 'Wie' (How) take position 1, followed directly by the verb.",
-    breakdown: [
-      { de: "Wo", en: "Where" },
-      { de: "ist", en: "is" },
-      { de: "das", en: "the (neuter)" },
-      { de: "Buch?", en: "book?" }
-    ],
+    grammarTip: "W-Questions: Question words like 'Wo' (Where) take position 1, followed directly by verb.",
     difficulty: "Beginner"
   }
 ];
 
-// Mode A: Word Match Questions (German to English Rapid Blitz)
+// Preserved Mode A & Mode C
 export const WORD_MATCH_QUESTIONS = [
   {
     id: 'wm-1',
@@ -215,7 +466,7 @@ export const WORD_MATCH_QUESTIONS = [
     category: 'Greetings',
     options: ['Good day', 'Goodbye', 'Good night', 'Hello'],
     correctAnswer: 'Goodbye',
-    explanation: "'Auf Wiedersehen' literally means 'until seeing each other again' and is the formal German way to say goodbye."
+    explanation: "'Auf Wiedersehen' means goodbye in formal German."
   },
   {
     id: 'wm-2',
@@ -224,7 +475,7 @@ export const WORD_MATCH_QUESTIONS = [
     category: 'Food & Drinks',
     options: ['Bread', 'Milk', 'Water', 'Coffee'],
     correctAnswer: 'Water',
-    explanation: "'das Wasser' is neuter and is a cognate of the English word 'water'."
+    explanation: "'das Wasser' means water."
   },
   {
     id: 'wm-3',
@@ -233,7 +484,7 @@ export const WORD_MATCH_QUESTIONS = [
     category: 'Feelings',
     options: ['Tired', 'Sad', 'Excited', 'Happy'],
     correctAnswer: 'Happy',
-    explanation: "'Glücklich' comes from 'das Glück' (luck / happiness). It means happy or lucky!"
+    explanation: "'Glücklich' means happy."
   },
   {
     id: 'wm-4',
@@ -242,7 +493,7 @@ export const WORD_MATCH_QUESTIONS = [
     category: 'Actions',
     options: ['To learn', 'To speak', 'To read', 'To eat'],
     correctAnswer: 'To learn',
-    explanation: "'Lernen' is the infinitive verb meaning 'to learn' or 'to study'."
+    explanation: "'Lernen' means to learn."
   },
   {
     id: 'wm-5',
@@ -251,75 +502,10 @@ export const WORD_MATCH_QUESTIONS = [
     category: 'People',
     options: ['Father', 'Brother', 'Male friend', 'Teacher'],
     correctAnswer: 'Male friend',
-    explanation: "'der Freund' means male friend or boyfriend. The female equivalent is 'die Freundin'."
-  },
-  {
-    id: 'wm-6',
-    germanWord: 'Bibliothek',
-    pronunciation: 'bib-lee-oh-TAYK',
-    category: 'Places',
-    options: ['Train station', 'Library', 'University', 'School'],
-    correctAnswer: 'Library',
-    explanation: "'die Bibliothek' is a feminine noun referring to a library."
-  },
-  {
-    id: 'wm-7',
-    germanWord: 'Schwarz',
-    pronunciation: 'SHVARTS',
-    category: 'Colours',
-    options: ['Red', 'White', 'Black', 'Yellow'],
-    correctAnswer: 'Black',
-    explanation: "'Schwarz' is the German word for black, representing the top stripe of the German flag."
-  },
-  {
-    id: 'wm-8',
-    germanWord: 'Sieben',
-    pronunciation: 'ZEE-ben',
-    category: 'Numbers',
-    options: ['Six', 'Seven', 'Eight', 'Nine'],
-    correctAnswer: 'Seven',
-    explanation: "'Sieben' is number 7 in German (eins, zwei, drei, vier, fünf, sechs, sieben)."
-  },
-  {
-    id: 'wm-9',
-    germanWord: 'Buch',
-    pronunciation: 'BOOKH',
-    category: 'School',
-    options: ['Pen', 'Paper', 'Question', 'Book'],
-    correctAnswer: 'Book',
-    explanation: "'das Buch' means book, plural 'die Bücher'."
-  },
-  {
-    id: 'wm-10',
-    germanWord: 'Wie heißt du?',
-    pronunciation: 'VEE HYST doo',
-    category: 'Questions',
-    options: ['How are you?', 'Where do you live?', 'What is your name?', 'How old are you?'],
-    correctAnswer: 'What is your name?',
-    explanation: "'Wie heißt du?' literally translates to 'How are you called?' and is how you ask someone's name informally."
-  },
-  {
-    id: 'wm-11',
-    germanWord: 'Frühstück / Brot',
-    germanWordDisplay: 'Brot',
-    pronunciation: 'BROHT',
-    category: 'Food & Drinks',
-    options: ['Cheese', 'Bread', 'Apple', 'Tea'],
-    correctAnswer: 'Bread',
-    explanation: "'das Brot' is bread, world-famous in Germany with over 3,000 distinct registered bread varieties!"
-  },
-  {
-    id: 'wm-12',
-    germanWord: 'Schnell',
-    pronunciation: 'SHNEL',
-    category: 'Descriptions',
-    options: ['Slow', 'Fast', 'Small', 'Big'],
-    correctAnswer: 'Fast',
-    explanation: "'Schnell' means fast or quick (as in the famous German highway or fast-paced sports)."
+    explanation: "'der Freund' means male friend."
   }
 ];
 
-// Mode C: Final Challenge Scenario Questions (Practical German Scenarios)
 export const FINAL_CHALLENGES = [
   {
     id: 'fc-1',
@@ -332,7 +518,7 @@ export const FINAL_CHALLENGES = [
       { text: "Guten Morgen", isCorrect: false },
       { text: "Buch", isCorrect: false }
     ],
-    explanation: "'Danke' (or 'Danke schön') is the standard way to say 'Thank you' in German. 'Wasser' is water, 'Guten Morgen' is good morning, and 'Buch' is book."
+    explanation: "'Danke' (or 'Danke schön') is the standard way to say 'Thank you' in German."
   },
   {
     id: 'fc-2',
@@ -345,7 +531,7 @@ export const FINAL_CHALLENGES = [
       { text: "Tschüss", isCorrect: false },
       { text: "Auf Wiedersehen", isCorrect: false }
     ],
-    explanation: "'Guten Morgen' is used from sunrise until around 11:00 AM. 'Gute Nacht' is only for going to sleep, and 'Tschüss' is an informal goodbye."
+    explanation: "'Guten Morgen' is used from sunrise until around 11:00 AM."
   },
   {
     id: 'fc-3',
@@ -358,20 +544,20 @@ export const FINAL_CHALLENGES = [
       { text: "Ich bin traurig", isCorrect: false },
       { text: "Wo ist die Schule?", isCorrect: false }
     ],
-    explanation: "'Ein Glas Wasser, bitte' means 'A glass of water, please'. Adding 'bitte' (please) makes any request polite!"
+    explanation: "'Ein Glas Wasser, bitte' means 'A glass of water, please'."
   },
   {
     id: 'fc-4',
     scenario: "Language Help",
     prompt: "You are visiting Berlin and need assistance from a local. How do you politely ask: 'Do you speak English?'",
-    context: "A helpful sentence when traveling or communicating with native speakers.",
+    context: "A helpful sentence when traveling.",
     options: [
       { text: "Wie heißt du?", isCorrect: false },
       { text: "Sprichst du Englisch?", isCorrect: true },
       { text: "Ich esse einen Apfel", isCorrect: false },
       { text: "Heute bin ich müde", isCorrect: false }
     ],
-    explanation: "'Sprichst du Englisch?' is the informal way to ask 'Do you speak English?'. Formally, you would say 'Sprechen Sie Englisch?'."
+    explanation: "'Sprichst du Englisch?' is the informal way to ask 'Do you speak English?'."
   },
   {
     id: 'fc-5',
@@ -384,19 +570,6 @@ export const FINAL_CHALLENGES = [
       { text: "Er trinkt Milch.", isCorrect: false },
       { text: "Das ist Schule.", isCorrect: false }
     ],
-    explanation: "'Ich heiße [Name]' (literally 'I am called [Name]') is the most natural German way to introduce yourself."
-  },
-  {
-    id: 'fc-6',
-    scenario: "Asking for Directions",
-    prompt: "You are looking for the train station in Frankfurt. Which question do you ask a pedestrian?",
-    context: "Finding places in a German city.",
-    options: [
-      { text: "Wo ist der Bahnhof?", isCorrect: true },
-      { text: "Was bedeutet das?", isCorrect: false },
-      { text: "Wie alt bist du?", isCorrect: false },
-      { text: "Du bist mein Freund", isCorrect: false }
-    ],
-    explanation: "'Wo ist der Bahnhof?' means 'Where is the train station?'. 'Wo' means where, and 'der Bahnhof' is the train station."
+    explanation: "'Ich heiße [Name]' is the most natural way to introduce yourself."
   }
 ];

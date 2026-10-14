@@ -82,113 +82,122 @@ export default function App() {
               onHowToPlay={() => handleNavigate('how-to-play')}
             />
 
-            {/* Section 1: The Three Game Modes Preview Cards */}
+            {/* Section 1: The 4 Gradual Beginner Levels Preview */}
             <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
               <div className="text-center max-w-2xl mx-auto mb-12">
                 <span className="text-xs font-bold uppercase tracking-wider text-deRed block mb-2">
-                  Choose Your German Quest
+                  5 Questions Per Game • Fast & Addictive
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-deBlack">
-                  Three Engaging Ways to Play
+                  Step-by-Step German Levels
                 </h2>
                 <p className="text-sm sm:text-base text-gray-600 mt-2">
-                  Crafted for all expo visitors — from complete beginners decoding their first word to advanced language detectives.
+                  Designed for absolute beginners with zero prior German. Learn with 3D illustrations, beat the timer, and claim your spot on the Expo Leaderboard!
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                {/* Mode B Card (Featured) */}
-                <div className="bg-white rounded-3xl p-7 border-2 border-deRed shadow-card-elevated relative overflow-hidden flex flex-col justify-between group hover:-translate-y-1.5 transition-all">
+                {/* Level 1 Card */}
+                <div className="bg-white rounded-3xl p-6 border-2 border-deRed shadow-card-elevated flex flex-col justify-between group hover:-translate-y-1.5 transition-all relative overflow-hidden">
                   <div className="absolute top-0 right-0 bg-deRed text-white px-3 py-1 rounded-bl-xl text-[10px] font-black uppercase tracking-wider">
-                    Flagship Game
+                    Step 1
                   </div>
-
                   <div>
                     <div className="w-12 h-12 rounded-2xl bg-deRed/10 text-deRed flex items-center justify-center mb-4">
-                      <Puzzle className="w-6 h-6" />
+                      <span className="text-2xl">🍎</span>
                     </div>
-                    <span className="text-xs font-bold text-deRed uppercase tracking-wider">
-                      Mode B
+                    <span className="text-[11px] font-bold text-deRed uppercase tracking-wider">
+                      Level 1
                     </span>
                     <h3 className="text-xl font-display font-bold text-deBlack mt-0.5">
-                      Sentence Decoder
+                      Look & Learn
                     </h3>
                     <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
-                      Given an English sentence, assemble scrambled German word cards in the exact correct order. Watch out for distractor words!
+                      See 3D objects, hear native German pronunciation, and learn articles (Der, Die, Das) before answering!
                     </p>
-                    <div className="mt-4 flex items-center gap-2 text-xs font-bold text-gray-500">
-                      <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                      <span>15 Sentence Puzzles • +100 pts each</span>
-                    </div>
                   </div>
-
                   <button
                     onClick={() => handleNavigate('game')}
-                    className="mt-6 w-full py-3 rounded-xl bg-deRed hover:bg-deRed-dark text-white font-extrabold text-xs sm:text-sm shadow-pocket-red transition-all active:translate-y-1 flex items-center justify-center gap-2"
+                    className="mt-6 w-full py-2.5 rounded-xl bg-deRed hover:bg-deRed-dark text-white font-extrabold text-xs shadow-pocket-red transition-all active:translate-y-1 flex items-center justify-center gap-1.5"
                   >
-                    <span>Play Sentence Decoder</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Play Level 1</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                {/* Mode A Card */}
-                <div className="bg-white rounded-3xl p-7 border-2 border-gray-200 shadow-card-elevated flex flex-col justify-between group hover:-translate-y-1.5 transition-all hover:border-deGold">
+                {/* Level 2 Card */}
+                <div className="bg-white rounded-3xl p-6 border-2 border-gray-200 shadow-card-elevated flex flex-col justify-between group hover:-translate-y-1.5 transition-all hover:border-deGold">
                   <div>
-                    <div className="w-12 h-12 rounded-2xl bg-deGold/20 text-deGold-dark flex items-center justify-center mb-4">
-                      <Layers className="w-6 h-6 text-amber-600" />
+                    <div className="w-12 h-12 rounded-2xl bg-deGold/20 text-amber-600 flex items-center justify-center mb-4">
+                      <span className="text-2xl">🍌</span>
                     </div>
-                    <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">
-                      Mode A
+                    <span className="text-[11px] font-bold text-amber-600 uppercase tracking-wider">
+                      Level 2
                     </span>
                     <h3 className="text-xl font-display font-bold text-deBlack mt-0.5">
-                      Word Match Blitz
+                      Picture Match
                     </h3>
                     <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
-                      Rapid German-to-English vocabulary quiz. Listen to the German word and pick the correct meaning from four multiple-choice options.
+                      Focus on large 3D pictures of everyday objects. Match the correct German noun in seconds!
                     </p>
-                    <div className="mt-4 flex items-center gap-2 text-xs font-bold text-gray-500">
-                      <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-                      <span>12 Quick Questions • +50 pts each</span>
-                    </div>
                   </div>
-
                   <button
                     onClick={() => handleNavigate('game')}
-                    className="mt-6 w-full py-3 rounded-xl bg-deBlack hover:bg-gray-800 text-deGold font-extrabold text-xs sm:text-sm shadow-pocket transition-all active:translate-y-1 flex items-center justify-center gap-2"
+                    className="mt-6 w-full py-2.5 rounded-xl bg-deGold hover:bg-deGold-dark text-deBlack font-extrabold text-xs shadow-pocket-gold transition-all active:translate-y-1 flex items-center justify-center gap-1.5"
                   >
-                    <span>Play Word Match</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Play Level 2</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                {/* Mode C Card */}
-                <div className="bg-white rounded-3xl p-7 border-2 border-gray-200 shadow-card-elevated flex flex-col justify-between group hover:-translate-y-1.5 transition-all hover:border-gray-800">
+                {/* Level 3 Card */}
+                <div className="bg-white rounded-3xl p-6 border-2 border-gray-200 shadow-card-elevated flex flex-col justify-between group hover:-translate-y-1.5 transition-all hover:border-deBlack">
                   <div>
                     <div className="w-12 h-12 rounded-2xl bg-gray-100 text-deBlack flex items-center justify-center mb-4">
-                      <Compass className="w-6 h-6" />
+                      <span className="text-2xl">🍞</span>
                     </div>
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Mode C
+                    <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                      Level 3
                     </span>
                     <h3 className="text-xl font-display font-bold text-deBlack mt-0.5">
-                      Final Challenge
+                      Complete Word
                     </h3>
                     <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
-                      Put your German into action with real-life scenarios! Order water, greet professors, ask for directions, and introduce yourself.
+                      Fill in the missing noun for "Der _____", "Die _____", or "Das _____" with immediate feedback.
                     </p>
-                    <div className="mt-4 flex items-center gap-2 text-xs font-bold text-gray-500">
-                      <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                      <span>Real Scenarios • +150 pts each</span>
-                    </div>
                   </div>
-
                   <button
                     onClick={() => handleNavigate('game')}
-                    className="mt-6 w-full py-3 rounded-xl bg-deGold hover:bg-deGold-dark text-deBlack font-extrabold text-xs sm:text-sm shadow-pocket-gold transition-all active:translate-y-1 flex items-center justify-center gap-2"
+                    className="mt-6 w-full py-2.5 rounded-xl bg-deBlack hover:bg-gray-800 text-deGold font-extrabold text-xs shadow-pocket transition-all active:translate-y-1 flex items-center justify-center gap-1.5"
                   >
-                    <span>Play Final Challenge</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Play Level 3</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Level 4 Card */}
+                <div className="bg-white rounded-3xl p-6 border-2 border-gray-200 shadow-card-elevated flex flex-col justify-between group hover:-translate-y-1.5 transition-all hover:border-green-600">
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-green-100 text-green-700 flex items-center justify-center mb-4">
+                      <span className="text-2xl">🧩</span>
+                    </div>
+                    <span className="text-[11px] font-bold text-green-600 uppercase tracking-wider">
+                      Level 4
+                    </span>
+                    <h3 className="text-xl font-display font-bold text-deBlack mt-0.5">
+                      Build Sentence
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
+                      Tap separate German cards (ICH | TRINKE | WASSER) to construct real beginner sentences with ease.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleNavigate('game')}
+                    className="mt-6 w-full py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs shadow-md transition-all active:translate-y-1 flex items-center justify-center gap-1.5"
+                  >
+                    <span>Play Level 4</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 

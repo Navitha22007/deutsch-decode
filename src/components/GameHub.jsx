@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { 
+  Eye, 
+  Image as ImageIcon, 
+  Edit3, 
   Puzzle, 
-  Gamepad2, 
-  Sparkles, 
-  CheckCircle2, 
+  ArrowRight, 
   Trophy, 
-  Layers, 
-  Compass, 
-  ArrowRight,
-  RotateCcw
+  Sparkles, 
+  Flame,
+  CheckCircle2,
+  Gamepad2
 } from 'lucide-react';
+import BeginnerGameView from './BeginnerGameView';
+import CompletionScreen from './CompletionScreen';
 import SentenceDecoder from './SentenceDecoder';
 import WordMatchGame from './WordMatchGame';
 import FinalChallengeGame from './FinalChallengeGame';
-import CompletionScreen from './CompletionScreen';
+import { GAME_LEVELS } from '../data/challenges';
 import { soundManager } from '../utils/audio';
 
 export default function GameHub({ 
@@ -22,24 +25,22 @@ export default function GameHub({
   onNavigateHome, 
   onExploreVocab 
 }) {
-  const [selectedMode, setSelectedMode] = useState('sentence'); // 'word-match' | 'sentence' | 'final'
+  // Active game mode/level: null (level select) | 'level1' | 'level2' | 'level3' | 'level4' | 'legacy-sentences'
+  const [activeLevelId, setActiveLevelId] = useState('level1');
   const [completionData, setCompletionData] = useState(null);
 
-  const handleUpdateScore = (points) => {
-    setTotalScore(prev => {
-      const next = prev + points;
-      try {
-        localStorage.setItem('deutsch_decode_best_score', Math.max(next, parseInt(localStorage.getItem('deutsch_decode_best_score') || '0')));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+  const selectedLevel = GAME_LEVELS.find(lvl => lvl.id === activeLevelId);
+
+  const handleLevelSelect = (lvlId) => {
+    soundManager.playClick();
+    setActiveLevelId(lvlId);
+    setCompletionData(null);
   };
 
   const handleGameComplete = (data) => {
     soundManager.playVictory();
     setCompletionData(data);
+    setTotalScore(prev => prev + (data.totalScore || 100));
   };
 
   const handlePlayAgain = () => {
@@ -47,10 +48,10 @@ export default function GameHub({
     setCompletionData(null);
   };
 
-  // If a mode has finished, render the celebration completion screen
+  // If a round was completed, show the victory + leaderboard screen
   if (completionData) {
     return (
-      <section className="py-12 md:py-16 bg-deCream min-h-screen">
+      <section className="py-6 sm:py-10 bg-deCream min-h-screen">
         <CompletionScreen
           completionData={completionData}
           totalScore={totalScore}
@@ -62,103 +63,91 @@ export default function GameHub({
     );
   }
 
+  // If a beginner level (1 to 4) is currently being played, render the clean BeginnerGameView
+  if (selectedLevel) {
+    return (
+      <BeginnerGameView
+        levelData={selectedLevel}
+        onNavigateHome={onNavigateHome}
+        onGameComplete={handleGameComplete}
+      />
+    );
+  }
+
+  // Otherwise, render the Level Selector Hub
   return (
-    <section id="game-section" className="py-12 md:py-16 bg-deCream min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 sm:py-16 bg-deCream min-h-screen">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
-        {/* Header & Mode Switcher */}
-        <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-deGold/20 border border-deGold/40 text-deBlack text-xs font-bold uppercase tracking-wider mb-3">
-            <Gamepad2 className="w-3.5 h-3.5 text-deRed" />
-            <span>Interactive Game Modes</span>
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-deRed/10 border border-deRed/20 text-deRed text-xs font-bold uppercase tracking-wider mb-2">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Beginner-Friendly Progression</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-deBlack tracking-tight">
-            DEUTSCH DECODE Arena
-          </h2>
-          <p className="mt-2 text-base text-gray-600">
-            Choose your challenge level. Test your vocabulary memory, solve shuffled sentence puzzles, or master real-world German scenarios!
+          <h1 className="text-3xl sm:text-4xl font-display font-black text-deBlack tracking-tight">
+            Choose Your Level
+          </h1>
+          <p className="mt-2 text-sm sm:text-base text-gray-600">
+            5 quick questions per game. Master the basics step-by-step with 3D illustrations, then race to the top of the Expo Leaderboard!
           </p>
-
-          {/* Mode Selector Tabs */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            
-            <button
-              onClick={() => {
-                soundManager.playClick();
-                setSelectedMode('sentence');
-              }}
-              className={`flex items-center gap-2 px-4 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all border-2 ${
-                selectedMode === 'sentence'
-                  ? 'bg-deBlack text-white border-deBlack shadow-pocket'
-                  : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
-              }`}
-            >
-              <Puzzle className={`w-4 h-4 ${selectedMode === 'sentence' ? 'text-deGold' : 'text-deRed'}`} />
-              <span>Mode B: Sentence Decoder</span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-deRed text-white">
-                Main Game
-              </span>
-            </button>
-
-            <button
-              onClick={() => {
-                soundManager.playClick();
-                setSelectedMode('word-match');
-              }}
-              className={`flex items-center gap-2 px-4 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all border-2 ${
-                selectedMode === 'word-match'
-                  ? 'bg-deBlack text-white border-deBlack shadow-pocket'
-                  : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
-              }`}
-            >
-              <Layers className={`w-4 h-4 ${selectedMode === 'word-match' ? 'text-deGold' : 'text-gray-500'}`} />
-              <span>Mode A: Word Match</span>
-            </button>
-
-            <button
-              onClick={() => {
-                soundManager.playClick();
-                setSelectedMode('final');
-              }}
-              className={`flex items-center gap-2 px-4 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all border-2 ${
-                selectedMode === 'final'
-                  ? 'bg-deBlack text-white border-deBlack shadow-pocket'
-                  : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
-              }`}
-            >
-              <Compass className={`w-4 h-4 ${selectedMode === 'final' ? 'text-deGold' : 'text-amber-500'}`} />
-              <span>Mode C: Final Challenge</span>
-            </button>
-
-          </div>
         </div>
 
-        {/* Active Mode Render */}
-        <div className="mt-6">
-          {selectedMode === 'sentence' && (
-            <SentenceDecoder
-              onUpdateScore={handleUpdateScore}
-              totalScore={totalScore}
-              onGameComplete={handleGameComplete}
-            />
-          )}
+        {/* 4 Gradual Beginner Levels Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          {GAME_LEVELS.map((lvl) => {
+            return (
+              <div
+                key={lvl.id}
+                onClick={() => handleLevelSelect(lvl.id)}
+                className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-deRed shadow-card-elevated cursor-pointer group hover:-translate-y-1 transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="w-9 h-9 rounded-xl bg-deBlack text-deGold font-display font-black text-sm flex items-center justify-center shadow-sm">
+                      L{lvl.levelNum}
+                    </span>
+                    <span className="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                      {lvl.badge}
+                    </span>
+                  </div>
 
-          {selectedMode === 'word-match' && (
-            <WordMatchGame
-              onUpdateScore={handleUpdateScore}
-              totalScore={totalScore}
-              onGameComplete={handleGameComplete}
-            />
-          )}
+                  <h3 className="text-xl font-display font-black text-deBlack group-hover:text-deRed transition-colors">
+                    {lvl.title}
+                  </h3>
+                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-0.5">
+                    {lvl.deTitle}
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
+                    {lvl.description}
+                  </p>
+                </div>
 
-          {selectedMode === 'final' && (
-            <FinalChallengeGame
-              onUpdateScore={handleUpdateScore}
-              totalScore={totalScore}
-              onGameComplete={handleGameComplete}
-            />
-          )}
+                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-deRed">
+                  <span>5 Questions • Fast Pace</span>
+                  <div className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    <span>Start Level</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Advanced Modes Accordion / Option */}
+        <div className="bg-white rounded-2xl p-5 border border-gray-200 text-center">
+          <p className="text-xs text-gray-500 mb-3">
+            Looking for more challenges? You can also play the extended 15-sentence puzzle deck.
+          </p>
+          <button
+            onClick={() => handleLevelSelect('level4')}
+            className="px-5 py-2.5 rounded-xl bg-deBlack hover:bg-gray-800 text-deGold text-xs font-bold transition-all inline-flex items-center gap-2"
+          >
+            <Puzzle className="w-4 h-4" />
+            <span>Play Sentence Builder (Level 4)</span>
+          </button>
         </div>
 
       </div>
