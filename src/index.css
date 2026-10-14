@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+}
+
+/* German Flag Ribbon decorative stripe */
+.german-ribbon {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    #111111 0%, #111111 33.33%,
+    #E63946 33.33%, #E63946 66.66%,
+    #FFC857 66.66%, #FFC857 100%
+  );
+}
+
+.german-ribbon-horizontal {
+  display: flex;
+  height: 8px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.german-stripe-black {
+  background-color: #111111;
+  flex: 1;
+}
+
+.german-stripe-red {
+  background-color: #E63946;
+  flex: 1;
+}
+
+.german-stripe-gold {
+  background-color: #FFC857;
+  flex: 1;
+}
+
+/* Display Pocket styling matching physical expo chart */
+.pocket-card {
+  position: relative;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pocket-card:hover {
+  transform: translateY(-3px);
+}
+
+.pocket-tab-red {
+  border-top: 5px solid #E63946;
+}
+
+.pocket-tab-gold {
+  border-top: 5px solid #FFC857;
+}
+
+.pocket-tab-black {
+  border-top: 5px solid #111111;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1EFEA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4CEBF;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B0A996;
+}
+
+/* Interactive focus ring */
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid #E63946;
+  outline-offset: 2px;
+}
