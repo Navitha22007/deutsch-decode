@@ -84,16 +84,16 @@ export default function PlayerRegistration({
           </p>
         </div>
 
-        {/* Current #1 Champion Banner */}
-        {topPlayer && (
-          <div className="mb-6 p-3 bg-amber-50 rounded-2xl border border-amber-200 flex items-center justify-between text-xs text-amber-900">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">{topPlayer.avatar || '🏆'}</span>
+        {/* Current #1 Champion Banner or First Visitor Encouragement */}
+        {topPlayer ? (
+          <div className="mb-6 p-3.5 bg-amber-50 rounded-2xl border border-amber-200 flex items-center justify-between text-xs text-amber-900">
+            <div className="flex items-center gap-2.5">
+              <span className="text-2xl">{topPlayer.avatar || '🏆'}</span>
               <div>
-                <span className="font-bold text-deBlack">Current Hall Leader:</span>{' '}
+                <span className="font-bold text-deBlack">Current 1st Place:</span>{' '}
                 <span className="font-extrabold text-deRed">{topPlayer.name}</span>
                 <span className="block text-[10px] text-gray-500">
-                  {topPlayer.score} pts in {topPlayer.time}s ({topPlayer.level})
+                  {topPlayer.score} pts in {topPlayer.time}s • Recorded at {topPlayer.timestamp}
                 </span>
               </div>
             </div>
@@ -107,6 +107,16 @@ export default function PlayerRegistration({
                 <span>View All</span>
               </button>
             )}
+          </div>
+        ) : (
+          <div className="mb-6 p-3.5 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl border border-amber-200 text-xs text-amber-950 flex items-center gap-2.5 shadow-sm">
+            <span className="text-2xl">🥇</span>
+            <div>
+              <span className="font-black text-deBlack block">The Expo Leaderboard is fresh & open!</span>
+              <span className="text-[11px] text-gray-600">
+                Be the very first participant today — complete 5 questions to claim Rank #1!
+              </span>
+            </div>
           </div>
         )}
 

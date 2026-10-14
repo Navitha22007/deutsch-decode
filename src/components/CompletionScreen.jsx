@@ -10,10 +10,10 @@ import {
   Timer, 
   Zap, 
   CheckCircle2, 
-  Medal,
-  ArrowRight
+  Download,
+  Users
 } from 'lucide-react';
-import { addLeaderboardEntry, getLeaderboard } from '../utils/leaderboard';
+import { addLeaderboardEntry, exportLeaderboardCSV } from '../utils/leaderboard';
 import { soundManager } from '../utils/audio';
 
 export default function CompletionScreen({ 
@@ -36,11 +36,10 @@ export default function CompletionScreen({
   } = completionData;
 
   const [leaderboard, setLeaderboard] = useState([]);
-  const [userRank, setUserRank] = useState(null);
+  const [metaInfo, setMetaInfo] = useState(null);
 
   // AUTOMATIC REAL-TIME INSERTION INTO LEADERBOARD ON MOUNT!
   useEffect(() => {
-    // Add entry immediately
     const res = addLeaderboardEntry({
       name: playerName,
       avatar: playerAvatar,
@@ -50,7 +49,7 @@ export default function CompletionScreen({
     });
 
     setLeaderboard(res.updatedLeaderboard);
-    setUserRank(res.rank);
+    setMetaInfo(res);
 
     // Continuous festive confetti
     const end = Date.now() + 2.5 * 1000;
@@ -106,7 +105,7 @@ export default function CompletionScreen({
             DU HAST ES GESCHAFFT!
           </h1>
           <p className="text-base sm:text-lg font-bold text-deRed mt-0.5">
-            You did it, {playerName}! • {levelName} Completed
+            Well done, {playerName}! • {levelName} Completed
           </p>
 
           {/* Badge */}
@@ -118,18 +117,27 @@ export default function CompletionScreen({
           </div>
         </div>
 
-        {/* Real-time Rank Live Banner */}
-        <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300 text-center shadow-sm">
-          <div className="flex items-center justify-center gap-2 text-amber-950 font-black text-base sm:text-lg">
-            <span>🎉 Real-Time Rank:</span>
-            <span className="px-3 py-0.5 rounded-lg bg-deBlack text-deGold text-base font-black">
-              #{userRank} on Leaderboard
-            </span>
+        {/* Real-time Dynamic Comparison Banner */}
+        {metaInfo && (
+          <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300 text-center shadow-sm">
+            <div className="flex items-center justify-center gap-2 text-amber-950 font-black text-base sm:text-lg">
+              <span>⚡ Live Expo Ranking:</span>
+              <span className="px-3 py-0.5 rounded-lg bg-deBlack text-deGold text-base font-black">
+                Rank #{metaInfo.rank} of {metaInfo.totalParticipants} Participants
+              </span>
+            </div>
+            
+            <p className="text-xs text-amber-900 font-semibold mt-1.5">
+              {metaInfo.totalParticipants === 1 ? (
+                <span>🌟 <strong>First Participant of the Day!</strong> You are currently holding the #1 position on the expo leaderboard!</span>
+              ) : metaInfo.isNewFirstPlace ? (
+                <span>🏆 <strong>NEW BOOTH RECORD!</strong> You just took 1st Place from {metaInfo.previousLeader?.name || 'the previous leader'} ({metaInfo.previousLeader?.score} pts)!</span>
+              ) : (
+                <span>👏 Great run! You are ranked #{metaInfo.rank}. {metaInfo.previousLeader?.name} is currently leading with {metaInfo.previousLeader?.score} pts.</span>
+              )}
+            </p>
           </div>
-          <p className="text-xs text-amber-800 font-semibold mt-1">
-            Your score and fast completion time have been recorded live in the Expo Hall of Fame!
-          </p>
-        </div>
+        )}
 
         {/* Performance & Speed Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6 p-4 bg-gray-50 rounded-2xl border border-gray-200">
@@ -189,17 +197,25 @@ export default function CompletionScreen({
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-deGold-dark" />
               <h3 className="text-base font-extrabold text-deBlack font-display">
-                College Expo Hall Leaderboard (Live)
+                Real-Time Expo Hall Leaderboard ({leaderboard.length} Total Visitors)
               </h3>
             </div>
-            <span className="text-xs text-gray-500 font-medium">
-              Ranked in real-time by Score & Speed
-            </span>
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                exportLeaderboardCSV();
+              }}
+              className="text-xs font-bold text-deRed hover:underline flex items-center gap-1 self-start sm:self-auto"
+              title="Download results to Excel / CSV"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Export CSV</span>
+            </button>
           </div>
 
           {/* Leaderboard Table */}
           <div className="space-y-2 max-h-[340px] overflow-y-auto pr-1">
-            {leaderboard.slice(0, 10).map((entry, idx) => {
+            {leaderboard.map((entry, idx) => {
               const isUser = entry.isCurrentSession;
               let medal = null;
               if (idx === 0) medal = '🥇';
@@ -226,12 +242,12 @@ export default function CompletionScreen({
                         <span>{entry.name}</span>
                         {isUser && (
                           <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-deRed text-white shadow-sm">
-                            YOU (LIVE)
+                            YOU (JUST NOW)
                           </span>
                         )}
                       </div>
                       <span className="text-[10px] text-gray-500 font-medium">
-                        {entry.level}
+                        {entry.level} • <span className="italic">{entry.timestamp}</span>
                       </span>
                     </div>
                   </div>
